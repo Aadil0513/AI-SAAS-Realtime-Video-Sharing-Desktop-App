@@ -102,7 +102,7 @@ export const getNotifications =async() =>{
             }
         })
 
-        if(notifications && notifications.length>0){
+        if(notifications && notifications.notification.length>0){
             return {
                 status : 200,
                 data : notifications

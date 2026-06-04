@@ -1,4 +1,6 @@
- import { client } from '@/lib/prisma'
+'use server'
+
+import { client } from '@/lib/prisma'
 import { currentUser } from '@clerk/nextjs/server'
 
 export const verifyAccessToWorkspace = async (workspaceId: string) => {
@@ -126,31 +128,24 @@ export const getWorkSpaces =async () =>{
         }
     }
     
-  const workSpaces = await client.user.findUnique({
-
-        where :{
-
-             clerkid :user.id
-            
+    const workSpaces = await client.user.findUnique({
+      where: {
+        clerkid: user.id,
+      },
+      select: {
+        subscription: {
+          select: {
+            plan: true,
+          },
         },
-        select :{
-            subscription :{
-                select:{
-                    plan : true
-                }
-
-            } ,
-            select :{
-                workspace:{
-                    select :{
-                        id : true,
-                        name : true ,
-                        type : true
-                    }
-                }
-            }
-
-        }
+        workspace: {
+          select: {
+            id: true,
+            name: true,
+            type: true,
+          },
+        },
+      },
     })
 
     if(workSpaces){

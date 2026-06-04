@@ -4,7 +4,7 @@ import React from 'react'
 
 import { verifyAccessToWorkspace } from '@/actions/workspace'
 
-import  {dehydrate ,Hydration , QueryClient } from '@tanstack/react-query'
+import  {dehydrate , HydrationBoundary, QueryClient } from '@tanstack/react-query'
  
 import { getWorkspaceFolders } from '@/actions/workspace'
 
@@ -12,12 +12,16 @@ import { getWorkSpaces } from '@/actions/workspace'
 import { getAllUserVideos  } from '@/actions/workspace'
 
 import { getNotifications} from '@/actions/user'
+// import { Sidebar } from 'lucide-react'
+
+import Sidebar from "../../../components/global/sidebar"
 type Props = {
-  params: { workspaceId: string }
+  params: Promise<{ workspaceld: string }>
   children: React.ReactNode
 }
 
-const Layout = async ({ params: { workspaceId }, children }: Props) => {
+const Layout = async ({ params, children }: Props) => {
+  const { workspaceld: workspaceId } = await params
   const auth = await onAuthenticateUser()
 
   if (!auth.user?.workspace) redirect('/auth/sign-in')
@@ -63,7 +67,19 @@ await query.prefetchQuery({
 
 })
 
-  return <div>Layout</div>
+  return (
+
+    <HydrationBoundary state={dehydrate(query)}>
+
+<div className='flex h-screen w-screen'>
+
+    <Sidebar activeWorkspaceId = {workspaceId} />
+
+</div>
+
+
+    </HydrationBoundary>
+  )
 }
 
 export default Layout
