@@ -126,3 +126,47 @@ export const getNotifications =async() =>{
 
 
 }
+
+
+export const searchUsers = async (query: string) => {
+  try {
+    // 1. Current logged-in user ki details backend session se nikalna
+    const user = await currentUser()
+    if (!user) return { status: 404 }
+
+    // 2. Database (Prisma client) se matching users search karna
+    const users = await client.user.findMany({
+      where: {
+        OR: [
+          { firstname: { contains: query } },
+          { email: { contains: query } },
+          { lastname: { contains: query } },
+        ],
+        NOT: [{ clerkid: user.id }],
+      },
+      select: {
+        id: true,
+        subscription: {
+          select: {
+            plan: true,
+          },
+        },
+        firstname: true,
+        lastname: true,
+        image: true,
+        email: true,
+      },
+    })
+
+    // 3. Agar users mil jayein toh data return karna
+    if (users && users.length > 0) {
+      return { status: 200, data: users }
+    }
+
+    // 4. Agar koi match na mile
+    return { status: 404, data: undefined }
+  } catch (error) {
+    // 5. Agar code crash ho ya database server down ho
+    return { status: 500, data: undefined }
+  }
+}

@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation'
 
 import { WorkspaceProps } from '@/types/index.type'
 import React from 'react'
-import Modal from '../loader/modal'
+import Modal from '../modal'
 import { ChevronDownIcon, CheckIcon, PlusCircle } from 'lucide-react'
 
 type Props = {
@@ -105,6 +105,8 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
 
 
   <Modal title='Invite To Workspace'
+
+  description='Invite other users to your workspace'
   
   trigger={
     <span className='text-sm cursor-pointer flex items-center
@@ -121,7 +123,10 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
     </span>
   }
   
-  ></Modal>
+  >
+
+    WorkspaceSearch
+  </Modal>
 </div>
 
 
