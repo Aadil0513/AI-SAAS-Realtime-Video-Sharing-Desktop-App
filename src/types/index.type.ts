@@ -21,3 +21,13 @@ export type WorkspaceProps ={
         }[]
     }
 }
+
+
+export type NotificationProps = {
+  status: number
+  data: {
+    _count: {
+      notification: number
+    }
+  }
+}

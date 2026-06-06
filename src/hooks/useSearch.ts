@@ -40,7 +40,7 @@ export const useSearch = (key: string, type: 'USERS') => {
     }, 1000)
 
     return () => clearTimeout(delayInputTimeoutId)
-  } [query])
+  } ,[query])
 
   // 2. React Query Data Fetcher: Jo database action ko trigger karta hai
   const { refetch, isFetching } = userQueryData(
@@ -51,7 +51,9 @@ export const useSearch = (key: string, type: 'USERS') => {
         if (users.status === 200 && users.data) {
           setOnUsers(users.data)
         }
+        return users
       }
+      return null
     },
     false
   )
