@@ -12,6 +12,8 @@ import { getWorkSpaces } from '@/actions/workspace'
 import { getAllUserVideos  } from '@/actions/workspace'
 
 import { getNotifications} from '@/actions/user'
+
+import GlobalHeader from '@/components/global/global-header'
 // import { Sidebar } from 'lucide-react'
 
 import Sidebar from "../../../components/global/sidebar"
@@ -75,6 +77,11 @@ await query.prefetchQuery({
 
     <Sidebar activeWorkspaceId = {workspaceId} />
 
+    <div className="w-full pt-28 p-6 overflow-y-scroll overflow-x-hidden">
+          <GlobalHeader workspace={hasAccess.data.workspace} />
+          <div className="mt-4">{children}</div>
+
+</div>
 </div>
 
 

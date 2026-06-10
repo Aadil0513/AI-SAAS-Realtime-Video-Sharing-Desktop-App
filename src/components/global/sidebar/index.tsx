@@ -18,15 +18,19 @@ import { usePathname, useRouter } from "next/navigation";
 import { WorkspaceProps } from "@/types/index.type";
 import React from "react";
 import Modal from "../modal";
-import { ChevronDownIcon, CheckIcon, PlusCircle } from "lucide-react";
+import { ChevronDownIcon, CheckIcon, PlusCircle , Menu } from "lucide-react";
 import Search from "../search/index";
 import { MENU_ITEMS } from "@/constants";
 import { getNotifications } from "@/actions/user";
-
+import Loader from '../loader'
 import { NotificationProps } from "@/types/index.type";
 import SidebarItem from "./sidebar-items";
 import GlobalCard from '../global-cart/index'
 import WorkspacePlaceholder from './workspace-placeholder'
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import InfoBar from '../info-bar'
+
 type Props = {
   activeWorkspaceId: string;
 };
@@ -59,7 +63,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
 
 
 
-  return (
+  const SidebarSection = (
     <div className="bg-[#111111] flex-none relative p-4 h-full w-[250px] flex flex-col gap-4 items-center overflow-hidden">
       {/* Logo Section */}
       <div className="bg-[#111111] p-4 flex gap-2 justify-center items-center mb-4 absolute top-0 left-0 right-0">
@@ -224,12 +228,47 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
           title="Upgrade to Pro"
           description=" Unlock AI features like transcription, AI summary, and more."
           // footer={<PaymentButton />}
-        />
+        >
+{/* 
+          <Button className="text-sm w-full mt-2"></Button>
+          <Loader>Upgade</Loader> */}
+
+
+          </GlobalCard>
+       
+       
       )}
       </div>
 
     </div>
   );
+return (
+    <div className="full">
+      <InfoBar />
+      <div className="md:hidden fixed my-4">
+        <Sheet>
+          <SheetTrigger
+            asChild
+            className="ml-2"
+          >
+            <Button
+              variant={'ghost'}
+              className="mt-[2px]"
+            >
+              <Menu />
+            </Button>
+          </SheetTrigger>
+          <SheetContent
+            side={'left'}
+            className="p-0 w-fit h-full"
+          >
+            {SidebarSection}
+          </SheetContent>
+        </Sheet>
+      </div>
+      <div className="md:block hidden h-full">{SidebarSection}</div>
+    </div>
+  )
 };
 
 export default Sidebar;
