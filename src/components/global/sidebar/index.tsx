@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { userQueryData } from "@/hooks/userQueryData";
+import { useQueryData } from "@/hooks/useQueryData";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -40,9 +40,9 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
   const pathName = usePathname();
 
   // React Query hook workspace data fetch karne ke liye
-  const { data, isFetched } = userQueryData(["user-workspaces"], getWorkSpaces);
+  const { data, isFetched } = useQueryData(["user-workspaces"], getWorkSpaces);
 
-  const { data: notification } = userQueryData(
+  const { data: notification } = useQueryData(
     ["user-notificatio"],
     getNotifications,
   );
@@ -248,16 +248,15 @@ return (
       <div className="md:hidden fixed my-4">
         <Sheet>
           <SheetTrigger
-            asChild
-            className="ml-2"
-          >
-            <Button
-              variant={'ghost'}
-              className="mt-[2px]"
-            >
-              <Menu />
-            </Button>
-          </SheetTrigger>
+            render={
+              <Button
+                variant={'ghost'}
+                className="mt-[2px] ml-2"
+              >
+                <Menu />
+              </Button>
+            }
+          />
           <SheetContent
             side={'left'}
             className="p-0 w-fit h-full"

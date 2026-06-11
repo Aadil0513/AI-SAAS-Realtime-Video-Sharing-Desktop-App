@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react'
 
 // import {useQueryData} from "./userQueryData"
 
-import {userQueryData} from './userQueryData'
+import {useQueryData} from './useQueryData'
 
 export const useSearch = (key: string, type: 'USERS') => {
   const [query, setQuery] = useState('')
@@ -43,9 +43,9 @@ export const useSearch = (key: string, type: 'USERS') => {
   } ,[query])
 
   // 2. React Query Data Fetcher: Jo database action ko trigger karta hai
-  const { refetch, isFetching } = userQueryData(
+  const { refetch, isFetching } = useQueryData(
     [key, debounce],
-    async ({ queryKey }) => {
+    async ({ queryKey }: { queryKey: any }) => {
       if (type === 'USERS') {
         const users = await searchUsers(queryKey[1] as string)
         if (users.status === 200 && users.data) {

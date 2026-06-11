@@ -1,6 +1,6 @@
 'use client'
 
-import { WorkSpace } from '@prisma/client'
+import { WorkSpace } from '@/generated/prisma'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
