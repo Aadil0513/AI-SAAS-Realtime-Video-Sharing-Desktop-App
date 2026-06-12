@@ -11,35 +11,34 @@ function Dialog({ ...props }: DialogPrimitive.Root.Props) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />
 }
 
-function DialogTrigger({ 
-  asChild, 
-  children, 
-  ...props 
+function DialogTrigger({
+  asChild,
+  children,
+  ...props
 }: DialogPrimitive.Trigger.Props & { asChild?: boolean }) {
-  // Agar file se asChild true bheja jaye (YouTuber method)
+  // Agar file se asChild true bheja jaye
   if (asChild) {
     return (
-      <DialogPrimitive.Trigger 
-        data-slot="dialog-trigger" 
-        render={children as React.ReactElement} 
-        nativeButton={false}
-        {...props} 
+      <DialogPrimitive.Trigger
+        data-slot="dialog-trigger"
+        render={children as React.ReactElement}
+        nativeButton={true}
+        {...props}
       />
     )
   }
-  
-  // Agar normal use ho raha ho, toh safe HTML environment ke liye nativeButton ko handle karein
+
+  // Normal usage ke liye
   return (
-    <DialogPrimitive.Trigger 
-      data-slot="dialog-trigger" 
-      nativeButton={false} 
+    <DialogPrimitive.Trigger
+      data-slot="dialog-trigger"
+      nativeButton={true}
       {...props}
     >
       {children}
     </DialogPrimitive.Trigger>
   )
 }
-
 
 function DialogPortal({ ...props }: DialogPrimitive.Portal.Props) {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
@@ -96,8 +95,7 @@ function DialogContent({
               />
             }
           >
-            <XIcon
-            />
+            <XIcon />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>
         )}

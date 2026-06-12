@@ -194,11 +194,11 @@ export const createWorkspace = async (name: string) => {
   }
 }
 
-export const createFolder = async (workspaceId: string) => {
+export const createFolder = async (workspaceId: string , name:string) => {
   try {
     const newFolder = await client.folder.create({
       data: {
-        name: 'Untitled Folder',
+        name: name ,
         workSpaceId: workspaceId,
       },
     })
